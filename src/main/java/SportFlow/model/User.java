@@ -1,10 +1,11 @@
 package SportFlow.model;
 
-public abstract class User {
+public class User {
     private int id;
     private String nom;
     private String email;
     private String role;
+
     private String password;
 
     //constructer
@@ -35,6 +36,10 @@ public abstract class User {
         this.id = id;
         this.nom = nom;
         this.email = email;
+
+    }
+
+    public User() {
 
     }
 

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-${pagecontext.request.contextPath}
+
+<jsp:include page="/views/parcials/header.jsp" />
+
  <section class="contact_section ">
     <div class="container-fluid">
       <div class="row">
@@ -12,25 +14,41 @@ ${pagecontext.request.contextPath}
           <div class="form_container pr-0 pr-lg-5 mr-0 mr-lg-2">
             <div class="heading_container">
               <h2>
-                Contact Us
+                Register
               </h2>
             </div>
-            <form action="">
+            <form class="signup-form" action="${pageContext.request.contextPath}/auth/register" method="post">
               <div>
-                <input type="text" placeholder="Name" />
+                <input type="text" placeholder="nom" name="nom"/>
               </div>
               <div>
-                <input type="email" placeholder="Email" />
+                <input type="email" placeholder="email" name="email"/>
               </div>
-              <div>
-                <input type="text" placeholder="Phone Number" />
+              <div class="form-group">
+              <label style="display: block"> </label>
+              <select name="role" class="form-control">
+              <option value="" disabled selected>Choose role</option>
+                <option value="trainer">Trainer</option>
+                <option value="member">Member</option>
+              </select>
+
+            </div>
+              <div class="form-group">
+              <label>Enter Password</label>
+               <input
+               type="password"
+               class="form-control"
+               placeholder="Enter Your Password"
+               name="password"
+                value="">
+
+                </input>
               </div>
-              <div>
-                <input type="text" class="message-box" placeholder="Message" />
-              </div>
+
+
               <div class="d-flex ">
-                <button>
-                  Send
+                <button type="submit">
+                  Sign Up
                 </button>
               </div>
             </form>
@@ -39,3 +57,5 @@ ${pagecontext.request.contextPath}
       </div>
     </div>
   </section>
+
+  <jsp:include page="/views/parcials/footer.jsp" />

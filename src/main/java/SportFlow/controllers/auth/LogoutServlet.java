@@ -1,4 +1,6 @@
 package SportFlow.controllers.auth;
 
-public class LogoutServlet {
+import jakarta.servlet.http.HttpServlet;
+
+public class LogoutServlet extends HttpServlet {
 }

@@ -17,9 +17,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
 
 @WebServlet("/auth/register")
 public class RegisterServlet extends HttpServlet {
@@ -28,54 +26,55 @@ public class RegisterServlet extends HttpServlet {
     private final Validator validator = factory.getValidator();
 
     private UserDAO userDAO = null;
-    public void init(){
+
+    public void init() {
         userDAO = new UserDAO();
 
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
-    throws ServletException , IOException
-    {
+            throws ServletException, IOException {
         ConnectDb connectDb = new ConnectDb();
         connectDb.getConnection();
 
         RequestDispatcher rs = req.getRequestDispatcher("/views/auth/register.jsp");
         rs.forward(req, res);
     }
-    protected void doPost(HttpServletRequest req,HttpServletResponse res)
-            throws ServletException , IOException
-    {
-        User user = null;
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
 
         String nom = req.getParameter("nom");
         String email = req.getParameter("email");
         String role = req.getParameter("role");
         String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirmPassword");
 
-        RegisterDto registerDto = new RegisterDto(nom,email,role,password,confirmPassword);
-
-        Set<ConstraintViolation<RegisterDto>> violations = validator.validate(registerDto);
-        HttpSession session = req.getSession();
-        Map<String, String> errors = new HashMap<>();
-
-        if(!violations.isEmpty()){
-            for (ConstraintViolation<RegisterDto> violation: violations){
-                errors.put(violation.getPropertyPath().toString(),violation.getMessage());
-            }
-            session.setAttribute("errors",errors);
-            session.setAttribute("old",registerDto);
-            res.sendRedirect(req.getContextPath()+"auth/register");
-
-
+        if (nom == null || email == null || role == null || password == null ||
+                nom.isEmpty() || email.isEmpty() || role.isEmpty() || password.isEmpty()) {
+            session.setAttribute("registerError", "Tous les champs sont obligatoires !");
+            res.sendRedirect(req.getContextPath() + "/auth/register");
+            return;
         }
+            RegisterDto registerDto = new RegisterDto(nom, email, role, password);
+            try {
+                userDAO.registerUser(registerDto);
+                System.out.println("user enregistrer");
+                session.setAttribute("registerSuccess","Registration valide ! please login");
+                res.sendRedirect(req.getContextPath()+"/auth/login");
 
-
+            }catch (Exception e){
+                System.out.println("errors lors de l'enregistrement de l'utilisateur : \" + e.getMessage()");
+                session.setAttribute("registerError", "NOT VALID");
+                res.sendRedirect(req.getContextPath() + "/auth/register");
+            }
+            userDAO.registerUser(registerDto);
+            session.setAttribute("registerSuccess", "Please login");
+        }
 
 
 
 
     }
 
-
-}

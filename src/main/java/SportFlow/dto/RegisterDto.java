@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 
 @PasswordMatch
 public class RegisterDto {
+    public RegisterDto(){
+
+    }
 
     @NotBlank(message = "nom is required")
     private String nom;
@@ -23,13 +26,15 @@ public class RegisterDto {
     private String confirmPassword;
 
 
-    public RegisterDto (String nom, String email, String role, String password, String confirmPassword) {
+    public RegisterDto (String nom, String email, String role, String password) {
         this.nom =nom;
         this.email = email;
         this.role = role;
         this.password = password;
-        this.confirmPassword = confirmPassword;
+
     }
+
+
 
 
     public String getNom() {
