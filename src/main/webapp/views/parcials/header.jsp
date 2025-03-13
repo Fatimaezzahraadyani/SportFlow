@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Neogym</title>
+  <title>SportFlow</title>
 
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
@@ -50,14 +50,14 @@
                   <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link" href="why.html"> Why us </a>
+                  <a class="nav-link" href="why.html">trainers</a>
                 </li>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="trainer.html"> trainers</a>
+                  <a class="nav-link" href="trainer.html"> Sign Up</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="contact.html"> Contact Us</a>
+                  <a class="nav-link" href="contact.html"> Sign In</a>
                 </li>
               </ul>
               <div class="user_option">

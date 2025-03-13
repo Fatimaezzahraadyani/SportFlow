@@ -41,6 +41,31 @@ public class UserDAO extends ConnectDb{
         }
 
     }
+    public User getUserByEmail(String email) {
+        User user = null;
+
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(GET_USER_BY_EMAIL)) {
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setNom(rs.getString("nom"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     public void addMember( int memberId ) {
         try (
                 Connection con = getConnection();
@@ -52,5 +77,6 @@ public class UserDAO extends ConnectDb{
         catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }
