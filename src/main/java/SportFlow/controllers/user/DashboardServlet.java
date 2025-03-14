@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/dashboard")
+@WebServlet("/dashboardTrainer")
 public class DashboardServlet extends HttpServlet {
     public void init () {}
 
@@ -17,7 +17,7 @@ public class DashboardServlet extends HttpServlet {
             throws ServletException, IOException
     {
 
-        RequestDispatcher rs = req.getRequestDispatcher("/views/user/dashboard.jsp");
+        RequestDispatcher rs = req.getRequestDispatcher("/views/user/dashboardTrainer.jsp");
         rs.forward(req, res);
 
     }

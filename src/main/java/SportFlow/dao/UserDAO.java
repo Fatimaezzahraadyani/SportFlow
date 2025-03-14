@@ -5,20 +5,23 @@ import SportFlow.model.User;
 
 import java.sql.*;
 
-public class UserDAO extends ConnectDb{
+public class UserDAO extends ConnectDb {
     private static final String GET_USER_BY_EMAIL = "select * from users where email= ?;";
     private static final String INSERT_INTO_USERS = "insert into users(nom, email,  role, password) values(?,?,?,?);";
-    private static final String ADD_MEMBER = "INSERT INTO members (member_id) values (?);";
+    private static final String ADD_MEMBER = "INSERT INTO membres (member_id) values (?);";
+    private static final String ADD_TRAINER = "INSERT INTO trainers (trainer_id) values (?);";
+    private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
 
 
-    public UserDAO () {}
+    public UserDAO() {
+    }
 
     public void registerUser(RegisterDto registerDto) {
         try
                 (
                         Connection connection = getConnection();
                         PreparedStatement stmt = connection.prepareStatement(INSERT_INTO_USERS, Statement.RETURN_GENERATED_KEYS);
-                ){
+                ) {
             stmt.setString(1, registerDto.getNom());
             stmt.setString(2, registerDto.getEmail());
             stmt.setString(3, registerDto.getRole());
@@ -36,11 +39,12 @@ public class UserDAO extends ConnectDb{
                 System.out.println("Échec de l'enregistrement de l'utilisateur.");
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
+
     public User getUserByEmail(String email) {
         User user = null;
 
@@ -66,15 +70,39 @@ public class UserDAO extends ConnectDb{
         return user;
     }
 
-    public void addMember( int memberId ) {
+    public void addMember(int memberId) {
         try (
                 Connection con = getConnection();
                 PreparedStatement stmt = con.prepareStatement(ADD_MEMBER);
-        ){
+        ) {
             stmt.setInt(1, memberId);
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        catch (SQLException e) {
+
+    }
+
+    public void addTrainer(int trainerId) {
+        try (
+                Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement(ADD_TRAINER);
+        ) {
+            stmt.setInt(1, trainerId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUserById(int userId) {
+        try (
+                Connection con = getConnection();
+                PreparedStatement stmt = con.prepareStatement(DELETE_USER_BY_ID);
+        ) {
+            stmt.setInt(1, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
